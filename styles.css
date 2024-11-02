@@ -97,6 +97,10 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--primary-100);
 }
 
+.results-container {
+    color: var(--text-100);
+}
+
 /* Estilos personalizados para los botones */
 .button-82-pushable {
   position: relative;
