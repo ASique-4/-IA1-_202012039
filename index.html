@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto 2 de IA - 202012039</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel/dist/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+    <style>
+        /* override styles here */
+        .notie-container {
+            box-shadow: none;
+        }
+    </style>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"></script>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <center>
+                <h1 class="title">Proyecto 2 de IA - 202012039</h1>
+                <br>
+                <br>
+            </center>
+
+            <!-- Carrusel de modelos -->
+            <div id="carousel-demo" class="carousel">
+                <!-- Sección de Regresión Lineal -->
+                <div class="carousel-item custom-carousel-item">
+                    <section id="linear-regression" class="box model-section custom-box">
+                        <h2 class="subtitle">Regresión Lineal</h2>
+                        <canvas id="linear--canva" width="800" height="400"></canvas>
+                        
+                        <div class="field">
+                            <div class="file has-name">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" id="linear--file" accept=".csv">
+                                    <span class="file-cta">
+                                        <span class="file-icon"><i class="fas fa-upload"></i></span>
+                                        <span class="file-label">Seleccionar archivo…</span>
+                                    </span>
+                                    <span class="file-name" id="linear--file-name">Ningún archivo seleccionado</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="buttons">
+                            <button id="linear--btn-fit" class="button-82-pushable button-82-primary" role="button">
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">Fit</span>
+                            </button>
+                            <button id="linear--btn-predict" class="button-82-pushable button-82-link" role="button" disabled>
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">Predict</span>
+                            </button>
+                            <button id="linear--btn-mse" class="button-82-pushable button-82-info" role="button" disabled>
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">MSE</span>
+                            </button>
+                            <button id="linear--btn-r2" class="button-82-pushable button-82-success" role="button" disabled>
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">Coeficiente R2</span>
+                            </button>
+                        </div>
+                        <div id="results-container">
+                            <h3 class="subtitle">Resultados</h3>
+                            <p id="fit-result"></p>
+                            <p id="predict-result"></p>
+                            <p id="mse-result"></p>
+                            <p id="r2-result"></p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sección de Regresión Polinomial -->
+                <div class="carousel-item custom-carousel-item">
+                    <section id="polynomial-regression" class="box model-section custom-box">
+                        <h2 class="subtitle">Regresión Polinomial</h2>
+                        <canvas id="polynomial--canva" width="800" height="400"></canvas>
+
+                        <div class="field">
+                            <div class="file has-name">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" id="polynomial--file" accept=".csv">
+                                    <span class="file-cta">
+                                        <span class="file-icon"><i class="fas fa-upload"></i></span>
+                                        <span class="file-label">Seleccionar archivo…</span>
+                                    </span>
+                                    <span class="file-name" id="polynomial--file-name">Ningún archivo seleccionado</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input type="number" class="input custom-input" id="polynomial-degree" placeholder="Grado del polinomio" min="1">
+                            </div>
+                        </div>
+
+                        <div class="buttons">
+                            <button id="polynomial--btn-fit" class="button-82-pushable button-82-primary" role="button">
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">Fit</span>
+                            </button>
+                            <button id="polynomial--btn-predict" class="button-82-pushable button-82-link" role="button" disabled>
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">Predict</span>
+                            </button>
+                            <button id="polynomial--btn-mse" class="button-82-pushable button-82-info" role="button" disabled>
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">MSE</span>
+                            </button>
+                            <button id="polynomial--btn-r2" class="button-82-pushable button-82-success" role="button" disabled>
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">Coeficiente R2</span>
+                            </button>
+                        </div>
+                        <div id="results-container">
+                            <h3 class="subtitle">Resultados</h3>
+                            <p id="poly-fit-result"></p>
+                            <p id="poly-predict-result"></p>
+                            <p id="poly-mse-result"></p>
+                            <p id="poly-r2-result"></p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sección de Árbol de Decisión ID3 -->
+                <div class="carousel-item custom-carousel-item">
+                    <section id="decision-tree" class="box model-section custom-box">
+                        <h2 class="subtitle">Árbol de Decisión ID3</h2>
+                        
+                        <div class="field">
+                            <div class="file has-name">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" id="training-file" accept=".csv">
+                                    <span class="file-cta">
+                                        <span class="file-icon"><i class="fas fa-upload"></i></span>
+                                        <span class="file-label">Seleccionar archivo de entrenamiento…</span>
+                                    </span>
+                                    <span class="file-name">Ningún archivo seleccionado</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="buttons">
+                            <button id="btngenerate" class="button-82-pushable button-82-primary" role="button">
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">Generar Árbol</span>
+                            </button>
+                            <button id="predict" class="button-82-pushable button-82-link" role="button">
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">Predecir</span>
+                            </button>
+                        </div>
+                        <div id="results-container">
+                            <h3 class="subtitle">Resultados</h3>
+                            <p id="prediction"></p>
+                        </div>
+                        <div id="treed" style="width: 800px; height: 400px; border: 1px solid lightgray;"></div>
+                    </section>
+                </div>
+
+                <!-- Sección de Red Neuronal -->
+                <div class="carousel-item custom-carousel-item">
+                    <section id="neural-network" class="box model-section custom-box">
+                        <h2 class="subtitle">Red Neuronal Basada en CSV</h2>
+
+                        <div class="field">
+                            <div class="file has-name">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" id="network-config-file" accept=".csv">
+                                    <span class="file-cta">
+                                        <span class="file-icon"><i class="fas fa-upload"></i></span>
+                                        <span class="file-label">Cargar configuración de red…</span>
+                                    </span>
+                                    <span class="file-name">Ningún archivo seleccionado</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="buttons">
+                            <button id="train-and-predict-btn" class="button-82-pushable button-82-primary" role="button">
+                                <span class="button-82-shadow"></span>
+                                <span class="button-82-edge"></span>
+                                <span class="button-82-front text">Entrenar y Predecir</span>
+                            </button>
+                        </div>
+                        <div id="results-container">
+                            <h3 class="subtitle">Resultados de Predicción</h3>
+                            <p id="nnresultado"></p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts para manejar nombres de archivos seleccionados -->
+    <script>
+        document.querySelectorAll('.file-input').forEach(input => {
+            input.addEventListener('change', () => {
+                const fileNameSpan = input.parentElement.querySelector('.file-name');
+                fileNameSpan.textContent = input.files.length > 0 ? input.files[0].name : 'Ningún archivo seleccionado';
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.5/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/vis-network@9.1.9/dist/vis-network.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bulma-carousel/dist/js/bulma-carousel.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            bulmaCarousel.attach('#carousel-demo', {
+                slidesToScroll: 1,
+                slidesToShow: 1,
+                infinite: true,
+                margin: 20, // Añade margen entre los slides
+            });
+        });
+        
+    </script>
+
+    <script src="tytusjs/LinearModel.js"></script>
+    <script src="scripts/LinearScript.js"></script>
+
+    <script src="tytusjs/PolynomialModel.js"></script>
+    <script src="scripts/PolynomialScript.js"></script>
+
+    <script src="tytusjs/DecisionTreeID3.js"></script>
+    <script src="scripts/DecisionTreeScript.js"></script>
+
+    <script src="tytusjs/NeuronalNetwork.js"></script>
+    <script src="scripts/NeuralNetworkScript.js"></script>
+
+    <script src="tytusjs/kmeans.js"></script>
+    <script src="scripts/KMeansScript.js"></script>
+
+    <script src="scripts/SelectorScript.js"></script>
+    <script src="https://unpkg.com/notie"></script>
+</body>
+
+</html>
