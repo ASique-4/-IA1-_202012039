@@ -1,109 +1,107 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Variables globales para almacenar los datos cargados
-  let networkConfig = [];
-  let networkTrainingData = [];
-  let networkPredictionData = [];
+// Variables globales para almacenar los datos cargados
+let networkConfig = [];
+let networkTrainingData = [];
+let networkPredictionData = [];
 
-  // Función para leer archivos CSV
-  const readCSVNetwork = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const data = event.target.result;
-        const rows = data
-          .trim()
-          .split("\n")
-          .map((row) => row.split(",").map(Number));
-        resolve(rows);
-      };
-      reader.onerror = (error) => reject(error);
-      reader.readAsText(file);
-    });
-  };
+// Función para leer archivos CSV
+const readCSVNetwork = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const data = event.target.result;
+      const rows = data
+        .trim()
+        .split("\n")
+        .map((row) => row.split(",").map(Number));
+      resolve(rows);
+    };
+    reader.onerror = (error) => reject(error);
+    reader.readAsText(file);
+  });
+};
 
-  // Cargar configuración de red
-  document
-    .getElementById("network-config-file")
-    .addEventListener("change", async (event) => {
-      networkConfig = (await readCSVNetwork(event.target.files[0]))[0];
-      console.log("Configuración de la red:", networkConfig);
-      notie.alert({
-        type: 'success',
-        text: 'Configuración de la red cargada correctamente.',
-        time: 3,
-        position: 'top'
-      });
-    });
-
-  // Cargar datos de entrenamiento
-  document
-    .getElementById("training-data-file")
-    .addEventListener("change", async (event) => {
-      networkTrainingData = await readCSVNetwork(event.target.files[0]);
-      console.log("Datos de entrenamiento:", networkTrainingData);
-      notie.alert({
-        type: 'success',
-        text: 'Datos de entrenamiento cargados correctamente.',
-        time: 3,
-        position: 'top'
-      });
-    });
-
-  // Cargar datos de predicción
-  document
-    .getElementById("prediction-data-file")
-    .addEventListener("change", async (event) => {
-      networkPredictionData = await readCSVNetwork(event.target.files[0]);
-      console.log("Datos de predicción:", networkPredictionData);
-      notie.alert({
-        type: 'success',
-        text: 'Datos de predicción cargados correctamente.',
-        time: 3,
-        position: 'top'
-      });
-    });
-
-  // Función para entrenar y predecir
-  document.getElementById("train-and-predict-btn").onclick = function () {
-    if (
-      networkConfig.length === 0 ||
-      networkTrainingData.length === 0 ||
-      networkPredictionData.length === 0
-    ) {
-      notie.alert({
-        type: 'warning',
-        text: 'Por favor, carga todos los archivos CSV antes de entrenar y predecir.',
-        time: 3,
-        position: 'top'
-      });
-      return;
-    }
-
-    // Crear la red neuronal con la configuración cargada
-    let redNeural = new NeuralNetwork(networkConfig);
-
-    // Entrenar la red neuronal con los datos de entrenamiento
-    networkTrainingData.forEach((row) => {
-      const inputs = row.slice(0, networkConfig[0]); // Entradas según configuración
-      const targets = row.slice(networkConfig[0]); // Salidas esperadas
-      redNeural.Entrenar(inputs, targets);
-    });
-
-    // Realizar predicciones con los datos de predicción
-    let predictions = networkPredictionData.map((inputs) => redNeural.Predecir(inputs));
-
-    // Mostrar los resultados
-    document.getElementById("nnresultado").innerHTML = predictions
-      .map(
-        (pred, index) =>
-          `Predicción ${index + 1}: [${pred.map((p) => p.toFixed(2)).join(", ")}]`
-      )
-      .join("<br>");
+// Cargar configuración de red
+document
+  .getElementById("network-config-file")
+  .addEventListener("change", async (event) => {
+    networkConfig = (await readCSVNetwork(event.target.files[0]))[0];
+    console.log("Configuración de la red:", networkConfig);
     notie.alert({
       type: 'success',
-      text: 'Entrenamiento y predicciones realizadas correctamente.',
+      text: 'Configuración de la red cargada correctamente.',
       time: 3,
       position: 'top'
     });
-  };
-});
+  });
+
+// Cargar datos de entrenamiento
+document
+  .getElementById("training-data-file")
+  .addEventListener("change", async (event) => {
+    networkTrainingData = await readCSVNetwork(event.target.files[0]);
+    console.log("Datos de entrenamiento:", networkTrainingData);
+    notie.alert({
+      type: 'success',
+      text: 'Datos de entrenamiento cargados correctamente.',
+      time: 3,
+      position: 'top'
+    });
+  });
+
+// Cargar datos de predicción
+document
+  .getElementById("prediction-data-file")
+  .addEventListener("change", async (event) => {
+    networkPredictionData = await readCSVNetwork(event.target.files[0]);
+    console.log("Datos de predicción:", networkPredictionData);
+    notie.alert({
+      type: 'success',
+      text: 'Datos de predicción cargados correctamente.',
+      time: 3,
+      position: 'top'
+    });
+  });
+
+// Función para entrenar y predecir
+document.getElementById("train-and-predict-btn").onclick = function () {
+  if (
+    networkConfig.length === 0 ||
+    networkTrainingData.length === 0 ||
+    networkPredictionData.length === 0
+  ) {
+    notie.alert({
+      type: 'warning',
+      text: 'Por favor, carga todos los archivos CSV antes de entrenar y predecir.',
+      time: 3,
+      position: 'top'
+    });
+    return;
+  }
+
+  // Crear la red neuronal con la configuración cargada
+  let redNeural = new NeuralNetwork(networkConfig);
+
+  // Entrenar la red neuronal con los datos de entrenamiento
+  networkTrainingData.forEach((row) => {
+    const inputs = row.slice(0, networkConfig[0]); // Entradas según configuración
+    const targets = row.slice(networkConfig[0]); // Salidas esperadas
+    redNeural.Entrenar(inputs, targets);
+  });
+
+  // Realizar predicciones con los datos de predicción
+  let predictions = networkPredictionData.map((inputs) => redNeural.Predecir(inputs));
+
+  // Mostrar los resultados
+  document.getElementById("nnresultado").innerHTML = predictions
+    .map(
+      (pred, index) =>
+        `Predicción ${index + 1}: [${pred.map((p) => p.toFixed(2)).join(", ")}]`
+    )
+    .join("<br>");
+  notie.alert({
+    type: 'success',
+    text: 'Entrenamiento y predicciones realizadas correctamente.',
+    time: 3,
+    position: 'top'
+  });
+};
