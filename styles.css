@@ -37,6 +37,10 @@ body {
     color: var(--text-100);
 }
 
+p {
+    color: var(--text-100); !important;
+}
+
 .button.is-primary {
     background-color: var(--primary-200);
     border-color: var(--primary-200);
