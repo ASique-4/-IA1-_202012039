@@ -60,7 +60,7 @@ La funcionalidad de Árbol de Decisión ID3 permite cargar un archivo de entrena
 
 ---
 
-## 4. Red Neuronal (Pendiente de imagen)
+## 4. Red Neuronal
 
 ### Descripción
 La funcionalidad de red neuronal permite entrenar un modelo de red neuronal con los datos cargados y realizar predicciones.
